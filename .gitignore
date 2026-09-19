@@ -1,0 +1,10 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.nuxt/
+.output/
+# draw.io backup/preview ชั่วคราว
+*.drawio.bkp
+.$*.drawio*
