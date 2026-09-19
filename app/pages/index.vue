@@ -1,5 +1,13 @@
 <script setup lang="ts">
-// S05 Lookbook — ตอนนี้เป็น empty state ชั่วคราว จนกว่าจะทำหน้าจอจริงตาม wireframe
+// S05 Lookbook — ยังเป็น empty state ชั่วคราว · ผู้ใช้ใหม่ที่ยังไม่ข้าม onboarding ถูกพาไป S04 (Q20)
+const { data: progress } = await useFetch('/api/me/progress')
+
+onMounted(() => {
+  let skipped = false
+  try { skipped = localStorage.getItem('onboarding-skipped') === '1' }
+  catch { /* อ่านไม่ได้ = ถือว่ายังไม่ข้าม */ }
+  if (progress.value && !progress.value.hasLook && !skipped) navigateTo('/onboarding')
+})
 </script>
 
 <template>
@@ -10,6 +18,7 @@
     <p class="text-muted">
       ยังไม่มีลุค — เลือกชิ้นแล้วให้ AI ลองบน twin ของคุณ
     </p>
-    <UButton label="ลองชุดแรกของคุณ" disabled />
+    <UButton v-if="!progress?.hasTwin" to="/twin/new" label="สร้าง twin ก่อน" />
+    <UButton v-else label="ลองชุดแรกของคุณ" disabled />
   </main>
 </template>

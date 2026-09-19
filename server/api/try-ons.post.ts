@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm'
-import { serverSupabaseClient } from '#supabase/server'
 import { outfitSchema } from '#shared/outfit'
 import { withUserDb } from '../utils/db'
+import { userStorageSigner } from '../utils/storage'
 import { getTryOnAdapter, loadTryOnRefs, submitToProvider } from '../utils/try-on'
 
 // ข้อผิดพลาดจาก start_try_on() → HTTP ที่ UI แสดงผลได้
@@ -42,15 +42,10 @@ export default defineEventHandler(async (event) => {
   })
 
   // 2) ส่งให้ provider ด้วย signed URL ที่ผู้ใช้สร้างเองได้ผ่าน storage RLS — ส่งไม่ออกก็ปล่อยเป็น queued ให้ cron ส่งแทน
-  const storage = (await serverSupabaseClient(event)).storage
+  const sign = await userStorageSigner(event)
   try {
     const submission = await submitToProvider({
-      adapter, tryOnId: id, refs, callbackUrl: `${config.public.siteUrl}/api/webhooks/try-on`,
-      async sign(bucket, path) {
-        const { data, error } = await storage.from(bucket).createSignedUrl(path, 600)
-        if (error || !data) throw error ?? new Error('sign failed')
-        return data.signedUrl
-      },
+      adapter, tryOnId: id, refs, sign, callbackUrl: `${config.public.siteUrl}/api/webhooks/try-on`,
     })
     if (submission) {
       await withUserDb(event, tx => tx.execute(sql`select public.mark_try_on_submitted(${id}, ${adapter.name}, ${submission.providerJobId})`))
