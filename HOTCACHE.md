@@ -11,17 +11,17 @@ Mobile-first PWA (UI ไทย) — ผู้ใช้สร้าง twin จ�
 ## ตอนนี้อยู่ตรงไหน
 - **เฟสออกแบบ** — ยังไม่มีโค้ด
 - ✅ grill 25 ข้อ · CONTEXT.md · ADR-0001..0004 · `docs/design/README.md` (หน้าจอ S01–S17 + MVP)
-- ✅ `docs/design/my-twin-styles.drawio` 7 หน้า (sitemap · 4 flow · wireframe low-fi · raw)
-- ⏳ รอผู้ใช้รีวิว drawio / สเก็ตช์ในหน้า raw
+- ✅ `docs/design/my-twin-styles.drawio` 9 หน้า (sitemap · 4 flow · wireframe · architecture · ER · raw)
+- ⏳ รอผู้ใช้ตัดสิน: โซนสิทธิ์พิเศษ (webhook/cron/push ไม่มี session) → ADR-0005 · กลไกงานเบื้องหลัง
 
 ## กฎเหล็ก
 1. ไม่มีทางใดที่คนอื่นเห็นรูปท่า (twin) · แอดมินไม่เห็นทั้งรูปท่าและรูปลุค — แชร์ได้แค่รูปลุคผ่านลิงก์เพิกถอนได้ (ADR-0003)
 2. ทุกการลองผ่านโควต้ารายคน + เพดานรวม ก่อนเรียก AI (ADR-0002)
 
 ## งานถัดไป
-1. รับ feedback drawio (ผู้ใช้อาจบอก "ดูหน้า raw" → export หน้า raw เป็น PNG แล้วอ่านภาพ)
-2. เพิ่มหน้า Architecture + Data model (ER) ในไฟล์ drawio — **แทรกหน้า ห้าม regenerate ทับ**
-3. เลือกผู้ให้บริการ AI try-on (คุณภาพ · ราคา/ครั้ง · ไม่เก็บรูป) → ADR
+1. ได้คำตอบเรื่องโซนสิทธิ์พิเศษ → เขียน ADR-0005 + แก้ป้าย ❓ ในหน้า Architecture (แก้เฉพาะจุด ห้าม regenerate)
+2. เลือกผู้ให้บริการ AI try-on / ลบพื้นหลัง (คุณภาพ · ราคา/ครั้ง · ไม่เก็บรูป) → ADR
+3. รับ feedback drawio / หน้า raw
 4. `/stack-setup` เมื่อเริ่มเขียนโค้ด
 
 ## กับดักที่เคยเจอ

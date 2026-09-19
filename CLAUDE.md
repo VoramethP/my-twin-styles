@@ -16,7 +16,7 @@
 |---|---|
 | คำนี้ในโปรเจกต์แปลว่าอะไร (twin, ท่า, ชิ้น, ช่อง, ชุด, ลุค, Remix) | [`CONTEXT.md`](CONTEXT.md) |
 | ขอบเขต MVP · navigation · รายการหน้าจอ | [`docs/design/README.md`](docs/design/README.md) |
-| flow + wireframe (draw.io 7 หน้า) | [`docs/design/my-twin-styles.drawio`](docs/design/my-twin-styles.drawio) |
+| flow · wireframe · architecture · ER (draw.io 9 หน้า) | [`docs/design/my-twin-styles.drawio`](docs/design/my-twin-styles.drawio) |
 | ประวัติว่าทำอะไรไปบ้าง ทำไมถึงตัดสินใจแบบนั้น | [`docs/WORKLOG.md`](docs/WORKLOG.md) |
 | เหตุผลเบื้องหลังการตัดสินใจเชิงสถาปัตยกรรม | [`docs/adr/`](docs/adr/) |
 

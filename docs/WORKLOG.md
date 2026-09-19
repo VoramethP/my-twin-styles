@@ -48,5 +48,22 @@ native app (สองโค้ดเบส) · invite-only (ผู้ใช้�
 
 ---
 
+## [2026-09-19] หน้า Architecture + Data model
+
+**ทำอะไร:** แทรกหน้า "7 Architecture" และ "8 Data model" ก่อนหน้า raw ใน .drawio (string insert ไม่ regenerate) · อ่าน skill stack-setup เพื่อวางตามสแต็กมาตรฐาน
+
+**ทำไมถึงเลือกแบบนี้:**
+- Vercel sin1 + Supabase ap-southeast-1 ตาม FDR-0004 (compute อยู่กับ DB)
+- Storage private ทั้งหมด เข้าถึงด้วย signed URL อายุสั้น — ส่งให้ AI ได้โดยไม่เปิด bucket (ADR-0003)
+- โควต้าเป็นตาราง daily_usage/global_usage + function reserve_quota() ใน transaction เดียว (ADR-0002)
+- งานเบื้องหลังใช้ async API ของ provider + webhook และ Vercel Cron เก็บงานค้าง (ยังเป็นข้อเสนอ)
+- ไม่มีตาราง twin — ผู้ใช้หนึ่งคนมี twin เดียว = poses ของ user นั้น · ชุด = try_on_items + pose_id
+- share_links เก็บ hash ของ token
+
+**พบระหว่างทาง:** stack ห้าม service role แต่ webhook / cron / push ทำงานโดยไม่มี session ผู้ใช้
+และต้องเขียนไฟล์ลุคลง storage ของผู้ใช้ → ทำเครื่องหมาย ❓ ในแผนภาพ รอผู้ใช้ตัดสิน (ADR-0005)
+
+---
+
 ## งานถัดไป
 ดู `HOTCACHE.md`

@@ -13,7 +13,9 @@
 | 4 | Flow: ลองชุด | Builder → เช็กโควต้า → เบื้องหลัง → แจ้งเตือน → ลุค → Remix / 👎 · กรณีล้มเหลว |
 | 5 | Flow: แชร์ลุค | สร้างลิงก์ → เพื่อนเปิดดู → เพิกถอน |
 | 6 | Wireframes | S01–S17 low-fi รวม empty state |
-| 7 | 99 raw (ของผู้ใช้) | พื้นที่สเก็ตช์/จด feedback — บอก Claude ว่า "ดูหน้า raw" |
+| 7 | Architecture | Vercel sin1 (Nuxt 4) · Supabase (Postgres/Auth/Storage private) · AI provider · Web Push · โซนสิทธิ์พิเศษ ❓ |
+| 8 | Data model | ER 15 ตาราง · reserve_quota/refund_quota · share_links เก็บ hash |
+| 9 | 99 raw (ของผู้ใช้) | พื้นที่สเก็ตช์/จด feedback — บอก Claude ว่า "ดูหน้า raw" |
 
 ## Navigation (มือถือ)
 
