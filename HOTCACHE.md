@@ -9,7 +9,7 @@ Mobile-first PWA (UI ไทย) — ผู้ใช้สร้าง twin จ�
 ให้ AI ลองบน twin ผลเป็นลุคใน lookbook ไว้ดูเป็น ref ตอนแต่งตัว หรือแชร์ถามเพื่อนผ่านลิงก์
 
 ## ตอนนี้อยู่ตรงไหน
-- ผู้ใช้ทำโปรเจกต์นี้**ให้เพื่อน** — repo อยู่ที่ GitHub ของผู้ใช้ เพื่อนเป็น collaborator
+- ผู้ใช้ทำโปรเจกต์นี้**ให้เพื่อน** — repo public: https://github.com/VoramethP/my-twin-styles (ยังไม่ได้เชิญเพื่อน)
 - **เฟสออกแบบ** — ยังไม่มีโค้ด
 - ✅ grill 25 ข้อ · CONTEXT.md · ADR-0001..0004 · `docs/design/README.md` (หน้าจอ S01–S17 + MVP)
 - ✅ `docs/design/my-twin-styles.drawio` 9 หน้า (sitemap · 4 flow · wireframe · architecture · ER · raw)
@@ -21,12 +21,13 @@ Mobile-first PWA (UI ไทย) — ผู้ใช้สร้าง twin จ�
 3. secret key ใช้ได้ที่ `server/utils/privileged` ที่เดียว — webhook/cron/push เท่านั้น (ADR-0005)
 
 ## งานถัดไป
-1. ขึ้น GitHub (repo ของผู้ใช้ + เพิ่มเพื่อนเป็น collaborator) — เช็ก repo-hygiene ก่อน push แรก
+1. เชิญเพื่อนเมื่อผู้ใช้ให้ username: `gh api -X PUT repos/VoramethP/my-twin-styles/collaborators/<user> -f permission=admin`
 2. รับ feedback drawio / หน้า raw
 3. `/stack-setup` เมื่อเริ่มเขียนโค้ด — พัฒนากับ **mock adapter** ของ AI ไปก่อน
 4. เลือกผู้ให้บริการ AI **ก่อนเปิดใช้จริง** (คุณภาพ · ราคา/ครั้ง · ไม่เก็บรูป · webhook ลงลายเซ็น) → ADR
 
 ## กับดักที่เคยเจอ
+- repo เป็น **public** — commit ใช้อีเมล noreply ของ GitHub (ตั้งใน git config ของ repo นี้) ห้ามเปลี่ยนกลับเป็นอีเมลส่วนตัว
 - เปิดไฟล์ใน draw.io แล้วบันทึก = จัด format ใหม่ทั้งไฟล์ (git diff ยาว) แต่เนื้อหาเท่าเดิม — เทียบราย cell ก่อนสรุปว่าผู้ใช้แก้
 - draw.io CLI v27+ นับหน้า `-p` จาก 1 · label ที่มี `<` `>` ต้อง escape ก่อน ไม่งั้นข้อความหาย
 

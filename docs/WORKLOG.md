@@ -93,5 +93,18 @@ webhook + cron ง่ายกว่าคิว + worker และพอสำ�
 
 ---
 
+## [2026-09-19] ขึ้น GitHub แบบ public
+
+**ทำอะไร:** ตรวจตาม repo-hygiene (secret 0 · ไม่มีไฟล์ .env) · เปลี่ยนผู้เขียน commit ทั้งหมดเป็นอีเมล noreply ของ GitHub ก่อน push แรก + ล้าง object เก่า ·
+สร้าง https://github.com/VoramethP/my-twin-styles (public) แล้ว push · ยังไม่เชิญเพื่อน (ผู้ใช้จะให้ username ทีหลัง สิทธิ์ admin)
+
+**ทำไมถึงเลือกแบบนี้:** ผู้ใช้ต้องการ public เฉพาะสิ่งที่ public ได้ — ไฟล์ทั้งหมดเป็นเอกสารออกแบบ ไม่มีความลับ
+แต่อีเมลส่วนตัวในข้อมูล commit จะเปิดเผยถาวรเมื่อขึ้น public จึงเปลี่ยนเป็น noreply (Q28-A)
+
+**ผลที่ตามมา / สิ่งที่ต้องระวังต่อไป:** ห้าม commit `.env` หรือ key · ไฟล์ `.env.example` ต้องเป็น placeholder ที่เห็นชัดว่าปลอม ·
+แนะนำผู้ใช้เปิด "Block command line pushes that expose my email" ใน GitHub Settings → Emails
+
+---
+
 ## งานถัดไป
 ดู `HOTCACHE.md`
