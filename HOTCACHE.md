@@ -23,9 +23,9 @@ Mobile-first PWA (UI ไทย) — ผู้ใช้สร้าง twin จ�
 4. query ในนามผู้ใช้ผ่าน `withUserDb()` เท่านั้น — Drizzle owner ข้าม RLS (ADR-0006)
 
 ## งานถัดไป
-1. ⏳ **รอผู้ใช้ตัดสิน**: ตัวตั้งเวลา cron (Vercel Hobby รันได้แค่วันละครั้ง) · หน้าแชร์ต้องเซ็น URL รูปลุคโดยไม่มี session
-2. สร้าง Supabase project (ap-southeast-1) + เปิด Google provider → `.env` → `npm run db:migrate`
-3. หน้าจอตาม wireframe: S04 onboarding → S02/S03 ท่า → S08/S09 ตู้ → S11 Builder → S05/S06 ลุค
+1. หน้าจอ onboarding (S04 → S02/S03 ท่า) ← **กำลังทำ**
+2. ผู้ใช้สร้าง Supabase project ตาม `docs/SETUP.md` → `npm run db:migrate` + ใส่ Vault
+3. หน้าจอต่อ: S08/S09 ตู้ → S11 Builder → S05/S06 ลุค → S13/S14 แชร์ (`server/api/share/` = ผู้เรียกที่ 4 ของโซนสิทธิ์พิเศษ)
 4. เชิญเพื่อน: `gh api -X PUT repos/VoramethP/my-twin-styles/collaborators/<user> -f permission=admin`
 5. เลือก AI provider ก่อนเปิดใช้จริง → ADR · Web Push (VAPID)
 

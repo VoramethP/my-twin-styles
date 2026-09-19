@@ -17,6 +17,7 @@
 | คำนี้ในโปรเจกต์แปลว่าอะไร (twin, ท่า, ชิ้น, ช่อง, ชุด, ลุค, Remix) | [`CONTEXT.md`](CONTEXT.md) |
 | ขอบเขต MVP · navigation · รายการหน้าจอ | [`docs/design/README.md`](docs/design/README.md) |
 | flow · wireframe · architecture · ER (draw.io 9 หน้า) | [`docs/design/my-twin-styles.drawio`](docs/design/my-twin-styles.drawio) |
+| ต่อ Supabase จริง · Vault · deploy Vercel | [`docs/SETUP.md`](docs/SETUP.md) |
 | ประวัติว่าทำอะไรไปบ้าง ทำไมถึงตัดสินใจแบบนั้น | [`docs/WORKLOG.md`](docs/WORKLOG.md) |
 | เหตุผลเบื้องหลังการตัดสินใจเชิงสถาปัตยกรรม | [`docs/adr/`](docs/adr/) |
 
@@ -97,7 +98,7 @@ npm run db:migrate       # apply migration (NUXT_DATABASE_URL) — ห้าม 
    ([ADR-0003](docs/adr/ADR-0003-twin-photos-never-shared.md)) · ❌ ใส่ URL รูปท่าในหน้าแชร์ หรือเปิด bucket แบบ public
 2. **ทุกการลองต้องผ่านโควต้ารายคน + เพดานรวม ก่อนเรียก AI** — จองแบบ atomic ตอนสั่ง คืนเฉพาะเมื่อระบบล้มเหลว
    ([ADR-0002](docs/adr/ADR-0002-open-signup-with-quota-and-global-cap.md)) · ❌ เรียก AI ตรงจาก endpoint ไหนก็ได้โดยไม่ผ่านตัวเช็ก
-3. **secret key ของ Supabase ใช้ได้ที่ `server/utils/privileged` ที่เดียว** — เรียกได้จาก webhook (ตรวจลายเซ็น) · cron (ตรวจ CRON_SECRET) · push เท่านั้น
+3. **secret key ของ Supabase ใช้ได้ที่ `server/utils/privileged` ที่เดียว** — เรียกได้จาก webhook (ตรวจลายเซ็น) · cron (ตรวจ CRON_SECRET) · push · หน้าแชร์ (เซ็นแค่รูปลุคที่แชร์อยู่) เท่านั้น
    ([ADR-0005](docs/adr/ADR-0005-privileged-zone-for-background-work.md)) · ❌ import โมดูลนี้จาก route ที่มี session ผู้ใช้ หรือเชื่อ user_id จาก payload ภายนอก
 4. **query ในนามผู้ใช้ผ่าน `withUserDb()` เท่านั้น** — Drizzle ต่อด้วย owner ซึ่งข้าม RLS
    ([ADR-0006](docs/adr/ADR-0006-drizzle-queries-through-with-user-db.md)) · ❌ เรียก `openDb()` ตรงจาก route ของผู้ใช้

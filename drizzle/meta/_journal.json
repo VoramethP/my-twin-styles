@@ -15,6 +15,13 @@
       "when": 1789823361064,
       "tag": "0001_functions_and_grants",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789824025836,
+      "tag": "0002_schedule_reconcile_cron",
+      "breakpoints": true
     }
   ]
 }

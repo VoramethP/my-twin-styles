@@ -3,7 +3,7 @@ import { join, relative } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 // ADR-0005: secret key ใช้ได้ที่ server/utils/privileged.ts ที่เดียว และเรียกได้จากโซนที่อนุญาตเท่านั้น
-const ALLOWED = [/^server\/utils\/privileged\.ts$/, /^server\/api\/webhooks\//, /^server\/api\/cron\//, /^server\/utils\/push\.ts$/]
+const ALLOWED = [/^server\/utils\/privileged\.ts$/, /^server\/api\/webhooks\//, /^server\/api\/cron\//, /^server\/api\/share\//, /^server\/utils\/push\.ts$/]
 const PRIVILEGED = /utils\/privileged|openPrivilegedDb|privilegedStorage|privilegedLifecycleDeps|supabaseSecretKey|SUPABASE_SECRET_KEY|serverSupabaseServiceRole/
 
 function walk(dir: string): string[] {

@@ -135,5 +135,17 @@ webhook + cron ง่ายกว่าคิว + worker และพอสำ�
 
 ---
 
+## [2026-09-19] Q30 ตัวตั้งเวลา = pg_cron · Q31 หน้าแชร์เป็นผู้เรียกที่ 4
+
+**ทำอะไร:** แก้ ADR-0005 + กฎเหล็กข้อ 3 · migration 0002 ตั้ง job `reconcile-try-ons` ด้วย pg_cron + pg_net
+(ข้ามเองบนฐานที่ไม่มี extension) · `docs/SETUP.md` ขั้นตอนต่อ Supabase/Vault/Vercel · guard test อนุญาต `server/api/share/`
+
+**ทำไมถึงเลือกแบบนี้:** Vercel Hobby รัน cron ได้วันละครั้ง · pg_cron ฟรีและ endpoint ตรวจ CRON_SECRET อยู่แล้ว ·
+URL/secret อยู่ใน Vault เพราะ repo public · หน้าแชร์เซ็นเฉพาะรูปลุคที่ token ยังใช้ได้ เข้มกว่าเปิด storage policy
+
+**ทางเลือกที่ไม่ได้เลือก:** Vercel Pro ($20/เดือน) · storage policy เปิดอ่านรูปที่แชร์ (รู้ path ก็เปิดได้)
+
+---
+
 ## งานถัดไป
 ดู `HOTCACHE.md`

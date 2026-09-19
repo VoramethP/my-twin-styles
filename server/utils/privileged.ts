@@ -1,5 +1,5 @@
 // ⚠️ โซนสิทธิ์พิเศษ (ADR-0005) — ที่เดียวในระบบที่อ่าน secret key ได้
-// ผู้เรียกที่อนุญาต: server/api/webhooks/** · server/api/cron/** · server/utils/push.ts
+// ผู้เรียกที่อนุญาต: server/api/webhooks/** · server/api/cron/** · server/api/share/** · server/utils/push.ts
 // route ที่มี session ผู้ใช้ห้าม import ไฟล์นี้ (tests/privileged-imports.test.ts ตรวจอยู่)
 // user_id ต้องมาจากแถว try_ons ในฐานข้อมูลเสมอ — ห้ามเชื่อ payload ภายนอก
 import { createClient } from '@supabase/supabase-js'
