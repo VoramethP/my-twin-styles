@@ -91,6 +91,8 @@ Web app (mobile-first PWA, UI ไทย) ให้ผู้ใช้สร้า
    ([ADR-0003](docs/adr/ADR-0003-twin-photos-never-shared.md)) · ❌ ใส่ URL รูปท่าในหน้าแชร์ หรือเปิด bucket แบบ public
 2. **ทุกการลองต้องผ่านโควต้ารายคน + เพดานรวม ก่อนเรียก AI** — จองแบบ atomic ตอนสั่ง คืนเฉพาะเมื่อระบบล้มเหลว
    ([ADR-0002](docs/adr/ADR-0002-open-signup-with-quota-and-global-cap.md)) · ❌ เรียก AI ตรงจาก endpoint ไหนก็ได้โดยไม่ผ่านตัวเช็ก
+3. **secret key ของ Supabase ใช้ได้ที่ `server/utils/privileged` ที่เดียว** — เรียกได้จาก webhook (ตรวจลายเซ็น) · cron (ตรวจ CRON_SECRET) · push เท่านั้น
+   ([ADR-0005](docs/adr/ADR-0005-privileged-zone-for-background-work.md)) · ❌ import โมดูลนี้จาก route ที่มี session ผู้ใช้ หรือเชื่อ user_id จาก payload ภายนอก
 
 ---
 
