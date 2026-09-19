@@ -1998,14 +1998,14 @@
         <mxCell id="c19" value="try_ons  (การลอง)" style="rounded=0;fillColor=#333333;fontColor=#FFFFFF;strokeColor=#333333;fontStyle=1;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="660" y="90" width="280" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="c20" value="id          uuid PK&lt;br&gt;user_id     FK&lt;br&gt;pose_id     FK NULL&lt;br&gt;remix_of_look_id FK NULL&lt;br&gt;status      queued|running&lt;br&gt;            |succeeded|failed&lt;br&gt;attempts    0–2&lt;br&gt;provider · provider_job_id&lt;br&gt;error_code  text NULL&lt;br&gt;quota_day   date&lt;br&gt;quota_refunded bool&lt;br&gt;created_at · finished_at" style="rounded=0;fillColor=#FFFFFF;strokeColor=#333333;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontFamily=Menlo;fontSize=10;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="c20" value="id          uuid PK&lt;br&gt;user_id     FK&lt;br&gt;pose_id     FK NULL&lt;br&gt;remix_of_look_id FK NULL&lt;br&gt;status      queued|running&lt;br&gt;            |succeeded|failed&lt;br&gt;attempts    0–2&lt;br&gt;provider · provider_job_id&lt;br&gt;error_code  text NULL&lt;br&gt;quota_day   date&lt;br&gt;quota_refunded bool&lt;br&gt;created_at · submitted_at · finished_at" style="rounded=0;fillColor=#FFFFFF;strokeColor=#333333;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontFamily=Menlo;fontSize=10;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="660" y="118" width="280" height="204" as="geometry" />
         </mxCell>
         <mxCell id="c21" value="try_on_items  (ชุด)" style="rounded=0;fillColor=#333333;fontColor=#FFFFFF;strokeColor=#333333;fontStyle=1;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="660" y="420" width="280" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="c22" value="try_on_id   FK ┐ PK&lt;br&gt;item_id     FK ┘ (SET NULL)&lt;br&gt;slot        top|bottom|outer&lt;br&gt;            |dress|accessory" style="rounded=0;fillColor=#FFFFFF;strokeColor=#333333;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontFamily=Menlo;fontSize=10;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="660" y="448" width="280" height="76" as="geometry" />
+        <mxCell id="c22" value="try_on_id   FK ┐&lt;br&gt;slot        ├ PK&lt;br&gt;position    ┘ (ลำดับในช่อง)&lt;br&gt;item_id     FK NULL (SET NULL)&lt;br&gt;slot: top|bottom|outer|dress|accessory" style="rounded=0;fillColor=#FFFFFF;strokeColor=#333333;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;fontFamily=Menlo;fontSize=10;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="448" width="280" height="92" as="geometry" />
         </mxCell>
         <mxCell id="c23" value="looks  (ลุค)" style="rounded=0;fillColor=#333333;fontColor=#FFFFFF;strokeColor=#333333;fontStyle=1;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="1010" y="90" width="250" height="28" as="geometry" />

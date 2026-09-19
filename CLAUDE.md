@@ -52,7 +52,7 @@
 | `/domain-modeling` | ลับคำศัพท์ · เขียน CONTEXT.md / ADR | ✅ |
 | `/drawio-from-code` | สร้าง/เพิ่มหน้า .drawio · อ่านหน้า raw ของผู้ใช้ | ✅ |
 | `/ui-decision` | เช็กลิสต์ตัดสินใจ UI ตอนทำหน้าจอจริง | ❌ |
-| `/stack-setup` | วางสแต็ก Nuxt 4 + Supabase + Drizzle ตอนเริ่มเขียนโค้ด | ✅ |
+| `/stack-setup` | กติกาสแต็ก Nuxt 4 + Supabase + Drizzle (ตั้งแล้ว — เปิดเมื่อแตะ auth/DB/deploy) | ✅ |
 | `/context-checker` · `/handoff` | เช็ก context · ปิดเซสชันให้เซสชันหน้าทำต่อได้ | ✅ |
 
 ---
@@ -77,11 +77,17 @@ Web app (mobile-first PWA, UI ไทย) ให้ผู้ใช้สร้า
 ## คำสั่งที่ใช้บ่อย
 
 ```bash
-# export หน้า N ของไฟล์ออกแบบเป็น PNG เพื่อตรวจภาพ (draw.io v27+ นับหน้าจาก 1)
+npm run dev              # dev server (ต้องมี .env — ดู .env.example)
+npm run check            # typecheck + unit test (ใช้ก่อน commit / handoff)
+npm run test:db          # DB test บน Postgres ในเครื่อง (ฐานชั่วคราว → จำลอง Supabase → migrate → vitest)
+npm run db:generate      # สร้าง migration จาก server/db/schema.ts
+npm run db:migrate       # apply migration (NUXT_DATABASE_URL) — ห้าม drizzle-kit push
+# export หน้า N ของไฟล์ออกแบบเป็น PNG (draw.io v27+ นับหน้าจาก 1)
 "/Applications/draw.io.app/Contents/MacOS/draw.io" -x -f png -p 1 -s 1.5 -b 20 -o /tmp/page-1.png docs/design/my-twin-styles.drawio
 ```
 
-ยังไม่มีโค้ด — คำสั่ง dev/test จะเพิ่มหลังรัน `/stack-setup`
+`test:db` ต้องมี Postgres ฟังอยู่ที่ `TEST_PG_URL` (ค่าตั้งต้น `postgresql://postgres@127.0.0.1:55432`) ·
+บน Mac ให้ `export LC_ALL=C` ก่อนเปิด postgres ไม่งั้นขึ้นไม่ได้
 
 ---
 
@@ -93,17 +99,25 @@ Web app (mobile-first PWA, UI ไทย) ให้ผู้ใช้สร้า
    ([ADR-0002](docs/adr/ADR-0002-open-signup-with-quota-and-global-cap.md)) · ❌ เรียก AI ตรงจาก endpoint ไหนก็ได้โดยไม่ผ่านตัวเช็ก
 3. **secret key ของ Supabase ใช้ได้ที่ `server/utils/privileged` ที่เดียว** — เรียกได้จาก webhook (ตรวจลายเซ็น) · cron (ตรวจ CRON_SECRET) · push เท่านั้น
    ([ADR-0005](docs/adr/ADR-0005-privileged-zone-for-background-work.md)) · ❌ import โมดูลนี้จาก route ที่มี session ผู้ใช้ หรือเชื่อ user_id จาก payload ภายนอก
+4. **query ในนามผู้ใช้ผ่าน `withUserDb()` เท่านั้น** — Drizzle ต่อด้วย owner ซึ่งข้าม RLS
+   ([ADR-0006](docs/adr/ADR-0006-drizzle-queries-through-with-user-db.md)) · ❌ เรียก `openDb()` ตรงจาก route ของผู้ใช้
 
 ---
 
 ## โครงสร้าง
 
 ```
-CLAUDE.md · HOTCACHE.md · CONTEXT.md     ← ความจำ + อภิธานศัพท์
-docs/adr/                                ← การตัดสินใจเชิงสถาปัตยกรรม
-docs/design/README.md                    ← ขอบเขต MVP · navigation · หน้าจอ
-docs/design/my-twin-styles.drawio        ← flow + wireframe (แก้ใน draw.io โดยตรง)
-docs/WORKLOG.md                          ← ประวัติ + เหตุผล
+app/                       หน้าจอ (Nuxt UI) — ตอนนี้มี login + หน้าแรกชั่วคราว
+server/api/try-ons.post.ts สั่งลอง: จองโควต้า → ส่งให้ provider (session ผู้ใช้)
+server/api/webhooks/·cron/ โซนสิทธิ์พิเศษ (ADR-0005)
+server/db/schema.ts        Drizzle schema + RLS policy
+server/utils/db.ts         openDb · withUserDb (ADR-0006)
+server/utils/privileged.ts ที่เดียวที่อ่าน secret key ได้
+server/utils/try-on/       adapter interface · mock · lifecycle (retry/คืนโควต้า)
+shared/outfit.ts           Zod: กติกาช่องของชุด
+drizzle/                   migration (0001 = function/grant/storage เขียนมือ)
+tests/                     unit · tests/db = RLS + lifecycle บน Postgres จริง
+CLAUDE.md · HOTCACHE.md · CONTEXT.md · docs/   ความจำ + ออกแบบ + ADR
 ```
 
 ## ธรรมเนียมการเขียน

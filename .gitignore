@@ -1,10 +1,29 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+.vercel
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
 .DS_Store
+.fleet
+.idea
+
+# Local env files — ค่าจริงอยู่ที่นี่เท่านั้น
 .env
 .env.*
 !.env.example
-node_modules/
-.nuxt/
-.output/
+
 # draw.io backup/preview ชั่วคราว
 *.drawio.bkp
 .$*.drawio*

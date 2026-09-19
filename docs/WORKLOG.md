@@ -106,5 +106,34 @@ webhook + cron ง่ายกว่าคิว + worker และพอสำ�
 
 ---
 
+## [2026-09-19] ตั้งสแต็ก + schema/RLS + mock adapter
+
+**ทำอะไร:**
+- scaffold Nuxt 4 (template minimal) ย้ายเข้า root ของ repo · ติดตั้งตามเวอร์ชันใน stack-setup + @supabase/supabase-js · typescript@6 · @types/node@22
+- `server/db/schema.ts` 14 ตาราง RLS ครบ (33 policy) · migration 0001 เขียนมือ: start_try_on (จองโควต้ารายคน+เพดานรวม atomic),
+  refund_quota, mark_try_on_submitted, admin_stats, trigger สร้าง profile / จำกัด 5 ท่า, column grant, storage bucket + policy
+- try-on: adapter interface · mock (ยิง webhook ลงลายเซ็น HMAC, จำลองล้มเหลวได้, ห้ามใช้บน production) ·
+  lifecycle (ส่งงาน, webhook idempotent, retry 1 ครั้ง, cron จับ timeout, คืนโควต้า) · API POST /api/try-ons · webhook · cron
+- หน้า login (Google + magic link) + หน้าแรกชั่วคราว
+- เทสต์: unit 17 (กติกาชุด, mock, guard โซนสิทธิ์พิเศษ, repo hygiene) · DB 18 บน Postgres 15 ในเครื่อง
+  ที่จำลอง auth/storage ของ Supabase (`tests/db/supabase-stub.sql`) รันในฐานะ authenticated
+- ADR-0006 · กฎเหล็กข้อ 4 · แก้หน้า ER: PK try_on_items = (try_on_id, slot, position) และเพิ่ม submitted_at
+
+**ทำไมถึงเลือกแบบนี้:**
+- try_on_items ใช้ position ใน PK แทน item_id — item_id ต้อง SET NULL ได้เมื่อลบชิ้น (ลุคเดิมยังอยู่) คอลัมน์ใน PK เป็น NULL ไม่ได้
+- ผู้ใช้ update try_ons ตรงไม่ได้ จึงมี mark_try_on_submitted() ที่เช็กเจ้าของ + สถานะ
+- route สั่งลองแยก 2 transaction: จองโควต้า commit ก่อนส่งงาน เพื่อให้ webhook ที่มาเร็วหาแถวเจอ · ส่งไม่ออกก็ปล่อยให้ cron ส่ง
+- ส่งไม่ออกนับเป็นหนึ่งรอบ กัน cron วนส่งไม่รู้จบ
+- signed URL ตอนสั่งลองสร้างด้วย client ของผู้ใช้ (storage RLS) — ไม่ต้องใช้สิทธิ์พิเศษ
+
+**ทางเลือกที่ไม่ได้เลือก และเพราะอะไร:** ดู ADR-0006 (supabase-js แทน Drizzle / เช็กสิทธิ์ในโค้ดเอง)
+
+**ผลที่ตามมา / สิ่งที่ต้องระวังต่อไป:**
+- **Vercel Hobby รัน cron ได้วันละครั้ง** — ADR-0005 ต้องการทุก 1 นาที → ยังไม่ใส่ crons ใน vercel.json รอผู้ใช้เลือก
+- หน้าแชร์ `/l/[token]` ต้องสร้าง signed URL ของรูปลุคโดยไม่มี session → ต้องตัดสินว่าเป็นผู้เรียกที่ 4 ของโซนสิทธิ์พิเศษหรือไม่
+- ยังไม่เคยต่อ Supabase จริง — stub จำลองแค่ auth.uid(), storage.objects/buckets/foldername
+
+---
+
 ## งานถัดไป
 ดู `HOTCACHE.md`
